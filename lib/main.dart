@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/h.dart';
+import 'package:flutter/services.dart';
+import 'package:news_app/layout/news_layout.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,9 +16,24 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarColor: Colors.white,
+          ),
+          centerTitle: true,
+          titleTextStyle: TextStyle(
+            fontSize: 26,
+            letterSpacing: .7,
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        scaffoldBackgroundColor: Colors.white,
         primarySwatch: Colors.blue,
       ),
-      home: const Hscreen(),
+      home: const NewsLayoutScreen(),
     );
   }
 }
