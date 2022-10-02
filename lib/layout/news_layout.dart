@@ -9,14 +9,26 @@ class NewsLayoutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (BuildContext context) => AppCubit(),
+        create: (BuildContext context) => AppCubit()
+          ..getBusiness()
+          ..getSports()
+          ..getScience(),
         child: BlocConsumer<AppCubit, AppStates>(
           builder: ((context, state) {
             return Scaffold(
               appBar: AppBar(
                 title: const Text('Elgarida'),
+                actions: [
+                  IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.search_sharp,
+                        size: 28,
+                      ))
+                ],
               ),
               bottomNavigationBar: BottomNavigationBar(
+                selectedItemColor: const Color.fromARGB(255, 202, 56, 3),
                 backgroundColor: Colors.white,
                 elevation: 0,
                 items: const [

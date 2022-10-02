@@ -1,8 +1,13 @@
+import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:news_app/layout/news_layout.dart';
+import 'package:news_app/shared/bloc_observer.dart';
+import 'package:news_app/shared/network/remote/dio_helper.dart';
 
 void main() {
+  Bloc.observer = MyBlocObserver();
+  DioHelper.init();
   runApp(const MyApp());
 }
 
@@ -21,13 +26,16 @@ class MyApp extends StatelessWidget {
           elevation: 0,
           systemOverlayStyle: SystemUiOverlayStyle(
             statusBarColor: Colors.white,
+            statusBarIconBrightness: Brightness.dark,
           ),
-          centerTitle: true,
           titleTextStyle: TextStyle(
             fontSize: 26,
             letterSpacing: .7,
             color: Colors.black,
             fontWeight: FontWeight.bold,
+          ),
+          iconTheme: IconThemeData(
+            color: Colors.black,
           ),
         ),
         scaffoldBackgroundColor: Colors.white,
