@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/layout/cubit/states.dart';
 import 'package:news_app/modules/business_screen.dart';
 import 'package:news_app/modules/science_screen.dart';
 import 'package:news_app/modules/sports_screen.dart';
+import 'package:news_app/shared/network/local/cache_helper.dart';
 import 'package:news_app/shared/network/remote/dio_helper.dart';
 
 class AppCubit extends Cubit<AppStates> {
@@ -16,6 +18,18 @@ class AppCubit extends Cubit<AppStates> {
     ScienceScreen(),
   ];
   int currentIndex = 0;
+  bool isDark = false;
+  void changeThemeApp({bool? fromCache}) {
+    if (fromCache != null) {
+      isDark = fromCache;
+      emit(AppChangeThemeDataState());
+    } else {
+      isDark = !isDark;
+      CacheHelper.setData(key: 'isDark', value: isDark).then((value) {
+        emit(AppChangeThemeDataState());
+      });
+    }
+  }
 
   void changeBottomNavBar(int index) {
     currentIndex = index;
@@ -27,7 +41,7 @@ class AppCubit extends Cubit<AppStates> {
   void getBusiness() {
     emit(AppLoadingGetBusinessState());
     DioHelper.getData(url: 'https://newsapi.org/v2/top-headlines', query: {
-      'country': 'us',
+      'country': 'eg',
       'category': 'business',
       'apiKey': '9917fb7dbd8c4f4cb2d43f401f7410e8',
     }).then((value) {
@@ -59,7 +73,7 @@ class AppCubit extends Cubit<AppStates> {
   void getScience() {
     emit(AppLoadingGetScienceState());
     DioHelper.getData(url: 'https://newsapi.org/v2/top-headlines', query: {
-      'country': 'us',
+      'country': 'eg',
       'category': 'science',
       'apiKey': '9917fb7dbd8c4f4cb2d43f401f7410e8',
     }).then((value) {

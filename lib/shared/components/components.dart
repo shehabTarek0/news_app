@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/layout/cubit/cubit.dart';
 
-Widget buildNewsItem(busines) => Padding(
+Widget buildNewsItem(context, busines) => Padding(
       padding: const EdgeInsets.all(20.0),
       child: Row(
         children: [
@@ -31,12 +32,15 @@ Widget buildNewsItem(busines) => Padding(
                   Expanded(
                     child: Text(
                       busines['title'],
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: AppCubit.get(context).isDark
+                            ? Colors.white
+                            : Colors.black,
+                      ),
                     ),
                   ),
                   Text(
@@ -53,3 +57,23 @@ Widget buildNewsItem(busines) => Padding(
         ],
       ),
     );
+
+Widget buildArticle(context, list) {
+  if (list.isNotEmpty) {
+    return ListView.separated(
+      physics: const BouncingScrollPhysics(),
+      itemCount: list.length,
+      separatorBuilder: (BuildContext context, int index) {
+        return const Divider(
+          thickness: 1.2,
+          indent: 20,
+        );
+      },
+      itemBuilder: (BuildContext context, int index) {
+        return buildNewsItem(context, list[index]);
+      },
+    );
+  } else {
+    return const Center(child: CircularProgressIndicator());
+  }
+}
