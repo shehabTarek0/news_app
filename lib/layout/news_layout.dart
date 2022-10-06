@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/layout/cubit/cubit.dart';
 import 'package:news_app/layout/cubit/states.dart';
+import 'package:news_app/modules/search_screen.dart';
 
 class NewsLayoutScreen extends StatelessWidget {
   const NewsLayoutScreen({super.key});
@@ -15,7 +16,13 @@ class NewsLayoutScreen extends StatelessWidget {
             title: const Text('Elgarida'),
             actions: [
               IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: ((context) => const SearchScreen()),
+                        ));
+                  },
                   icon: const Icon(
                     Icons.search_sharp,
                     size: 28,

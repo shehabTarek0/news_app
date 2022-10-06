@@ -36,6 +36,7 @@ class MyApp extends StatelessWidget {
               title: 'Flutter Demo',
               debugShowCheckedModeBanner: false,
               theme: ThemeData(
+                primarySwatch: Colors.deepOrange,
                 appBarTheme: const AppBarTheme(
                   backgroundColor: Colors.white,
                   elevation: 0,
@@ -63,6 +64,7 @@ class MyApp extends StatelessWidget {
                 scaffoldBackgroundColor: Colors.white,
               ),
               darkTheme: ThemeData(
+                primarySwatch: Colors.deepOrange,
                 textTheme: const TextTheme(
                   bodyText1: TextStyle(
                     fontSize: 20,

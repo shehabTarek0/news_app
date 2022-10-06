@@ -23,3 +23,9 @@ class AppLoadingGetScienceState extends AppStates {}
 class AppSuccessGetScienceState extends AppStates {}
 
 class AppErrorGetScienceState extends AppStates {}
+
+class AppLoadingGetSearchState extends AppStates {}
+
+class AppSuccessGetSearchState extends AppStates {}
+
+class AppErrorGetSearchState extends AppStates {}
