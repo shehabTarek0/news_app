@@ -1,64 +1,76 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/layout/cubit/cubit.dart';
+import 'package:news_app/modules/web_view.dart';
 
-Widget buildNewsItem(context, busines) => Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Row(
-        children: [
-          Container(
-            width: 130,
-            height: 130,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              image: DecorationImage(
-                image: NetworkImage(
-                  '${busines["urlToImage"] ?? "https://i.ibb.co/CQbCYsz/news-default.png"}',
+Widget buildNewsItem(context, busines) => InkWell(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: ((context) => WebViewScreen(
+                    url: busines['url'],
+                  )),
+            ));
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Row(
+          children: [
+            Container(
+              width: 130,
+              height: 130,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                image: DecorationImage(
+                  image: NetworkImage(
+                    '${busines["urlToImage"] ?? "https://i.ibb.co/CQbCYsz/news-default.png"}',
+                  ),
+                  fit: BoxFit.cover,
                 ),
-                fit: BoxFit.cover,
               ),
             ),
-          ),
-          const SizedBox(
-            width: 20,
-          ),
-          Expanded(
-            child: SizedBox(
-              height: 130,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Expanded(
-                    child: Text(
-                      busines['title'],
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: AppCubit.get(context).isDark
-                            ? Colors.white
-                            : Colors.black,
+            const SizedBox(
+              width: 20,
+            ),
+            Expanded(
+              child: SizedBox(
+                height: 130,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        busines['title'],
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: AppCubit.get(context).isDark
+                              ? Colors.white
+                              : Colors.black,
+                        ),
                       ),
                     ),
-                  ),
-                  Text(
-                    busines['publishedAt'],
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey,
+                    Text(
+                      busines['publishedAt'],
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
 
-Widget buildArticle(context, list) {
+Widget buildArticle(context, list, {bool isSearch = false}) {
   if (list.isNotEmpty) {
     return ListView.separated(
       physics: const BouncingScrollPhysics(),
@@ -74,6 +86,8 @@ Widget buildArticle(context, list) {
       },
     );
   } else {
-    return const Center(child: CircularProgressIndicator());
+    return isSearch
+        ? Container()
+        : const Center(child: CircularProgressIndicator());
   }
 }

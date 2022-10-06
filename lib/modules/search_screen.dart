@@ -19,27 +19,36 @@ class SearchScreen extends StatelessWidget {
             padding: const EdgeInsets.all(20.0),
             child: Column(
               children: [
-                TextFormField(
-                  controller: searchController,
-                  decoration: InputDecoration(
-                    border: const OutlineInputBorder(),
-                    labelText: 'Search',
-                    labelStyle: TextStyle(
+                Container(
+                  decoration: const BoxDecoration(boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey,
+                      blurStyle: BlurStyle.outer,
+                      blurRadius: 8,
+                    )
+                  ]),
+                  child: TextFormField(
+                    controller: searchController,
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                      labelText: 'Search',
+                      labelStyle: TextStyle(
+                          color: AppCubit.get(context).isDark
+                              ? Colors.white
+                              : Colors.black),
+                      prefixIcon: Icon(
+                        Icons.search,
                         color: AppCubit.get(context).isDark
                             ? Colors.white
-                            : Colors.black),
-                    prefixIcon: Icon(
-                      Icons.search,
-                      color: AppCubit.get(context).isDark
-                          ? Colors.white
-                          : Colors.black,
+                            : Colors.black,
+                      ),
                     ),
+                    onChanged: (value) {
+                      AppCubit.get(context).getSearch(value: value);
+                    },
                   ),
-                  onChanged: (value) {
-                    AppCubit.get(context).getSearch(value: value);
-                  },
                 ),
-                Expanded(child: buildArticle(context, list)),
+                Expanded(child: buildArticle(context, list, isSearch: true)),
               ],
             ),
           ),

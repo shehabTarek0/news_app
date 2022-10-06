@@ -15,7 +15,13 @@ void main() async {
   Bloc.observer = MyBlocObserver();
   DioHelper.init();
   await CacheHelper.init();
-  bool isDarkMain = CacheHelper.getData(key: 'isDark');
+  bool isDarkMain;
+  if (CacheHelper.getData(key: 'isDark') == null) {
+    isDarkMain = false;
+  } else {
+    isDarkMain = CacheHelper.getData(key: 'isDark');
+  }
+
   runApp(MyApp(isDarkMain));
 }
 
